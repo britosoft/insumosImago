@@ -136,6 +136,7 @@
      $rutas[0] == "salir" ||
      $rutas[0] == "crear-pedidos" ||
      $rutas[0] == "materiales" ||
+     $rutas[0] == "materialesProjectos" ||
 
       $rutas[0] == "mi_pedidos" ||
      $rutas[0] == "gestorSistema"){
@@ -177,6 +178,21 @@ include 'modulos/footer.php';
 <script src="<?php echo $servidor; ?>vistas/js/pedido.js"></script>
 <!--<script src="<?php echo $servidor; ?>vistas/js/buscadorUsuario.js"></script>---->
 
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
 
 
 </body>

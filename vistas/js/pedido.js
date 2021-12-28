@@ -56,11 +56,11 @@ $(".tablaPedidos tbody").on("click", "button.agregarProducto", function(){
           '  <div>'+
               
 		 '<div class="input-group">'+
-			 '<input type="text" class="form-control input-lg material" id="material" value="'+material+'" required readonly>'+
+			 '<input type="text" class="form-control input-lg material"  value="'+material+'" required readonly>'+
  '<input type="number" class="form-control input-lg cantidad"  min="1"  value="1"  presupuesto="'+presupuesto+'" name="cantidad" presupuesto="'+presupuesto+'" nuevoPresupuesto="'+Number(presupuesto-1)+'" required>'+    		           
 
 			'<div class="input-group-append">'+ 
-		  '<button type="button" class="btn btn-danger quitarProducto" idMaterial="'+idMaterial+'"><i class="fa fa-times"></i></button>'+
+		  '<button type="button" class="btn btn-danger quitarProducto idMaterial" idMaterial="'+idMaterial+'"><i class="fa fa-times"></i></button>'+
 	  '</div>'+
 
 		 '</div>'+
@@ -183,13 +183,15 @@ function listarProductos(){
 	var listaProductos = [];
 
 	var material = $(".material");
+	var idMaterial = $(".idMaterial");
 
 	var cantidad = $(".cantidad");
+	
 
 
 	for(var i = 0; i < material.length; i++){
 
-		listaProductos.push({
+		listaProductos.push({"id" : $(idMaterial[i]).attr("idMaterial"), 
 							  "material" : $(material[i]).val(),
 							  "cantidad" : $(cantidad[i]).val(),
 							  "presupuesto" : $(cantidad[i]).attr("nuevoPresupuesto"),

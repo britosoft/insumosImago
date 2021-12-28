@@ -21,13 +21,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Administrar Usuarios</h1>
+            <h1>Administrar Empleados</h1>
           </div>
 
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="innicio">Inicio</a></li>
-              <li class="breadcrumb-item active">Administrar Usuarios</li>
+              <li class="breadcrumb-item active">Administrar Empleados</li>
             </ol>
           </div>
 
@@ -44,7 +44,7 @@
         <div class="card-header">
              <button class="btn btn-dark" data-toggle="modal" data-target="#modalAgregarEmpleado">
           
-          Agregar usuario
+          Agregar empleado
 
         </button>
 
@@ -64,7 +64,7 @@
            
            <th style="width:10px">#</th>
            <th>Nombre/Apellido</th>
-           <th>Usuario</th>
+           <th>Cedula</th>
            <th>Foto</th>
            <th>Rol</th>
             <th>Proyecto</th>
@@ -101,7 +101,7 @@
 
           echo' </td>
             <td>'.$value["rol"].'</td>
-            <td>'.$value["projecto"].'</td>
+            <td>'.$value["proyecto"].'</td>
             
              <td>
               <div class="btn-group">
@@ -162,7 +162,7 @@ MODAL Agregar Empleado
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title ml-2">Agregar  Usuario</h4>
+          <h4 class="modal-title ml-2">Agregar  Empleado</h4>
 
         </div>
 
@@ -231,8 +231,6 @@ MODAL Agregar Empleado
               
               <div class="input-group">
           <select class="form-control input-lg" id="rol" name="NuevoRol" required="">
-          <option value="">Agregar Rol</option>
-            <option value="SuperAdministrador">Super Administrador</option>
             <option value="Administrador">Administrador</option>
             <option value="Suplente">Suplente</option>
               
@@ -247,36 +245,7 @@ MODAL Agregar Empleado
 
             </div>
 
-                  <!-- ENTRADA PARA SELECCIONAR SU ROL -->
-                  <div class="form-group">
-              
-              <div class="input-group">
-          <select class="form-control input-lg" id="rol" name="nuevoProjecto" required="">
-          <option value="">Proyecto</option>
-            <?php
-            
-            $item = null;
-              $valor = null;
-              $mostrarUbicacion =  ControladorEmpleados::ctrMostrarUbicacion($item, $valor);
 
-              foreach ($mostrarUbicacion as $key => $value) {
-                
-            echo'<option value="'.$value["ubicacion"].'">'.$value["ubicacion"].'</option>';} ?>
-         
-              
-                </select>
-                  <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-home"></span>
-            </div>
-          </div>
-
-              </div>
-
-            </div>
-
-
- 
           
             <!-- ENTRADA PARA SUBIR FOTO -->
 
@@ -306,7 +275,7 @@ MODAL Agregar Empleado
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn bg-dark">Agregar Usuario</button>
+          <button type="submit" class="btn bg-dark">Agregar Empleado</button>
 
         </div>
 
@@ -349,7 +318,7 @@ MODAL EDITAR EMPLEADO
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title ml-2">Actualizar Usuario</h4>
+          <h4 class="modal-title ml-2">Actualizar  Empleado</h4>
 
         </div>
 
@@ -463,7 +432,7 @@ MODAL EDITAR EMPLEADO
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-dark">Acualizar  Usuario</button>
+          <button type="submit" class="btn btn-dark">Acualizar  Empleado</button>
 
         </div>
 

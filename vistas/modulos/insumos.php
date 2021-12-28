@@ -31,7 +31,7 @@
       <div class="card">
 
         <div class="card-header">
-             <button class="btn btn-dark" data-toggle="modal" data-target="#modalAgregarEmpleado">
+             <button class="btn btn-dark" data-toggle="modal" data-target="#modalAgregarInsumo">
           
           Agregar Insumo
 
@@ -82,8 +82,6 @@
       
 
         foreach ($insumos as $key => $value) {
-
-     
           
           echo'<tr>
             <td>'.($key + 1).'</td>
@@ -186,9 +184,11 @@ MODAL  TRASNFERIR INSUMO
               
                       <div class="input-group">
                       <input type="text" class="form-control" id="codigoTrasferir" name="codigoh"  readonly>
-                          <div class="input-group-append">
-                   
-                  </div>
+                      <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fa fa-code"></span>
+          </div>
+        </div>
                       </div>
           
                     </div>                   
@@ -235,12 +235,17 @@ MODAL  TRASNFERIR INSUMO
        <!-- ENTRADA PARA EL CANTIDAD-->
 
                  <div class="form-group">
+              <label>Cantidad</label>
 
               
               <div class="input-group">
-                 <input type="hidden" class="form-control input-lg" name="cantidad" id="cantidad"    readonly="">
+                 <input type="text" class="form-control input-lg" name="cantidadh" id="cantidad"  placeholder="Cantidadh"   readonly="">
            
-               
+                <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-th"></span>
+            </div>
+          </div>
             </div>
             </div>
 
@@ -311,20 +316,24 @@ MODAL  TRASNFERIR INSUMO
 
                   <!-- ENTRADA PARA LA DESCRIPCION -->
 
-               <div class="input-group mb-3">
-               <div class=" input-group-append">
+            
+            <div class="form-group">
+              
+              <div class="input-group">
+              <textarea class="form-control" id="editarDescripcion"  name="descripcionh"  name="descripcion"></textarea>
+                <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="far fa-comments"></span>
+            </div>
+          </div>
 
-                 <textarea  rows="4" cols="50" maxlength="400" name="descripcionh" placeholder="Puedes darnos una breve descripcion sobre la trasferencia y el insumo"   required=""></textarea>
-
-                
-               </div>
-          
+              </div>
 
             </div>
-
             </div>
             </div>
 
+            
 
 
         <!--=====================================
@@ -342,7 +351,7 @@ MODAL  TRASNFERIR INSUMO
      <?php
 
          $ActualizarInsumos = new ControladorEmpleados();
-         $ActualizarInsumos -> ctrActualizarInsumos();
+        $ActualizarInsumos -> ctrActualizarInsumos();
 
 
           $HistorialInsumos = new ControladorEmpleados();
@@ -405,9 +414,11 @@ MODAL  EDITAR INSUMO
               
                       <div class="input-group">
                       <input type="text" class="form-control" id="editarCodigoTrasferir" name="codigoh"  readonly>
-                          <div class="input-group-append">
-                   
-                  </div>
+                      <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fa fa-code"></span>
+          </div>
+        </div>
                       </div>
           
                     </div>                          
@@ -495,19 +506,21 @@ MODAL  EDITAR INSUMO
 
                   <!-- ENTRADA PARA LA DESCRIPCION -->
 
-               <div class="input-group mb-3">
-               <div class=" input-group-append">
 
-                 <textarea  rows="4" cols="50" maxlength="400"id="editarDescripcion"  name="descripcionh" placeholder="Puedes darnos una breve descripcion sobre la trasferencia y el insumo"   required=""></textarea>
+            <div class="form-group">
+              
+              <div class="input-group">
+              <textarea class="form-control" id="editarDescripcion"  name="descripcionh"  name="descripcion"></textarea>
+                <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="far fa-comments"></span>
+            </div>
+          </div>
 
-                
-               </div>
-          
+              </div>
 
             </div>
             </div>
-
-
 
         <!--=====================================
         PIE DEL MODAL
@@ -523,8 +536,8 @@ MODAL  EDITAR INSUMO
 
      <?php
 
-         $ActualizarInsumos = new ControladorEmpleados();
-         $ActualizarInsumos -> ctrActualizarInsumos();
+         //$ActualizarInsumos = new ControladorEmpleados();
+         //$ActualizarInsumos -> ctrActualizarInsumos();
 
 
           $HistorialInsumos = new ControladorEmpleados();
@@ -543,10 +556,10 @@ MODAL  EDITAR INSUMO
 
 
 <!--=====================================
-MODAL EDITAR Empleado
+MODAL EDITAR INSUMOS
 ======================================-->
 
-<div id="modalAgregarEmpleado" class="modal fade" role="dialog">
+<div id="modalAgregarInsumo" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -593,9 +606,11 @@ MODAL EDITAR Empleado
               
                       <div class="input-group">
                       <input type="text" class="form-control" id="codigo" name="codigo" value="10001" readonly>
-                          <div class="input-group-append">
-                   
-                  </div>
+                      <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fa fa-code"></span>
+                      </div>
+                    </div>
                       </div>
           
                     </div>';
@@ -699,18 +714,18 @@ MODAL EDITAR Empleado
                  <div class="form-group">
               
               <div class="input-group">
-               <select class="form-control tituloCategoria" name="id_ubicacion" required="">
+              <select class="form-control tituloCategoria" name="id_ubicacion" required="">
 
-                 <option selected="">Ubicacion</option>
-                   <?php 
-              $item = null;
-              $valor = null;
-              $mostrarUbicacion = ControladorEmpleados::ctrMostrarUbicacion($item, $valor);
+<option selected="">Ubicacion</option>
+  <?php 
+$item = null;
+$valor = null;
+$mostrarUbicacion = ControladorEmpleados::ctrMostrarUbicacion($item, $valor);
 
-              foreach ($mostrarUbicacion as $key => $value) {
-                 echo'<option value="'.$value["id"].'">'.$value["ubicacion"].'</option>';
-               }?>
-                 </select>
+foreach ($mostrarUbicacion as $key => $value) {
+echo'<option value="'.$value["id"].'">'.$value["ubicacion"].'</option>';
+}?>
+</select>
                  
            
                 <div class="input-group-append">
@@ -725,19 +740,21 @@ MODAL EDITAR Empleado
                 
 
                   <!-- ENTRADA PARA LA DESCRIPCION -->
+               
+            <div class="form-group">
+              
+              <div class="input-group">
+              <textarea class="form-control" id="editarDescripcion"  name="descripcion"  name="descripcion"></textarea>
+                <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="far fa-comments"></span>
+            </div>
+          </div>
 
-               <div class="input-group mb-3">
-               <div class=" input-group-append">
-
-                 <textarea  rows="4" cols="25" maxlength="400" name="descripcion" placeholder="Maximo 400 caráteres"   required=""></textarea>
-
-                
-               </div>
-          
+              </div>
 
             </div>
             </div>
-
 
         <!--=====================================
         PIE DEL MODAL

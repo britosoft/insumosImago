@@ -53,7 +53,7 @@
             <th>Imagen</th>
            <th>Descripción</th>
            <th>Presupuesto</th>
-           <th>Agregar</th>
+           <th>Materiales</th>
 
          </tr> 
 

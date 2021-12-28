@@ -75,16 +75,16 @@
                   <i class="fas fa-user"></i>
                   <p>Usuarios</p>
                 </a>
-              </li>';
+              </li>
+              <li class="nav-item">
+              <a href="'.$servidor.'empleados" class="nav-link">
+                <i class="fas fa-users"></i>
+                <p>Empleados</p>
+              </a>
+            </li>';
             }
             ?>
-             <li class="nav-item">
-                <a href="<?php echo $servidor; ?>materiales" class="nav-link">
-                <i class="fas fa-toolbox"></i>
-                  <p>Materiales</p>
-                </a>
-              </li>
-
+            
 
               <li class="nav-item">
                 <a href="<?php echo $servidor; ?>crear-pedidos" class="nav-link">
@@ -110,9 +110,10 @@
 
          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class=" fas fa-users"></i>
+            <i class="fas fa-toolbox"></i>
+
               <p>
-            Insumos
+           Materiales
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>

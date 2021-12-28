@@ -52,7 +52,7 @@
               
             <div class="input-group">
 
-           <textarea class="form-control" rows="2" name="comentario" placeholder="¡Comentario general! ¿tienes algo que aclarar? "></textarea>
+           <textarea class="form-control" rows="2" name="comentario" placeholder="¡Comentario general! ¿tienes algo que acalrar? "></textarea>
            <input type="hidden" id="listaProductos" name="listaProductos">
                 <div class="input-group-append">
           <div class="input-group-text">
@@ -195,75 +195,9 @@
 
  <div class="col-sm-12 col-md-8">
             
-       <table class="table  table table-striped table-bordered dt-responsive nowrap tablas tablaPedidos" style="width:100%; display: block;">
-         
-        <thead>
-         
-         <tr>
-           
-           <th style="width:10px">#</th>
-           <th>Material</th>          
-            <th>Imagen</th>
-           <th>Descripción</th>
-           <th>Presupuesto</th>
-           <th>Agregar</th>
-
-         </tr> 
-
-        </thead>
-
-        <tbody>
-         <?php
-
-          $url = Ruta::backend();
-
-          $item = null;
-          $valor = null;
-
-          $MostrarMateriales = ControladorMateriales::ctrMostrarMateriales($item, $valor);
-
-          foreach($MostrarMateriales as $key => $value){
-
-          
-          echo'
-          <tr>
-            <td>'.($key + 1).'</td>
-            <td>'.$value["material"].'</td>
-            <td>';
-
-         if($value["imagen"] == ""){
-              echo'<img src="vistas/imagenes/materiales/no-image.png" class="img-thumbnail" width="75px">';
-            }else{
-               echo'<img src="'.$url.$value["imagen"].'" class="img-thumbnail" width="40px">';
-            }
-            echo'</td>
-            <td><textarea class="form-control" readonly>'.$value["descripcion"].'</textarea></td>
-            <td><button class="btn btn-success">'.number_format($value["presupuesto"], 2).'</button></td>
-           
-            <td>
-
-              <div class="btn-group">                
-               
-              <div class="btn-group">
-                  
-                <button class="btn btn-warning agregarProducto recuperarBoton" idMaterial="'.$value["id"].'" >Agregar
-                </button>           
-
-              </div>              
-
-              </div>  
-
-            </td>
-
-          </tr>';
-                } 
-            ?>
-
-
-        </tbody>
-
-       </table>
-             
+  
+  <?php require'materialesProjectos.php';?>
+  
            </div>
 
 

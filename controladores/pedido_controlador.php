@@ -39,12 +39,22 @@ class ControladorPedidos{
 		$listaProductos = json_decode($_POST["listaProductos"], true);
 
 
-		//foreach ($listaProductos as $key => $value) {
-//var_dump($value["cantidad"]);
+		foreach ($listaProductos as $key => $value) {
 
-#return;
+$tablaMateriales = "materiales";
+$valor = $value["id"];
+$item1b = "presupuesto";
+$valor1b = $value["presupuesto"];
 
-		#}
+
+//var_dump($value["presupuesto"]);
+
+//return;
+
+$nuevoPresupuesto = ModeloMateriales::mdlActualizarMaterial($tablaMateriales,  $item1b, $valor1b, $valor);
+
+
+		}
 
 
 		$tabla = "pedidos";

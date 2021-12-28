@@ -25,7 +25,7 @@ class ControladorEmpleados{
 				//var_dump($respuesta);
 
 
-				if(is_array($respuesta) && $respuesta["usuario"] == $_POST["ingUsuario"] && $respuesta["password"] == $encriptar){
+				if($respuesta["usuario"] == $_POST["ingUsuario"] && $respuesta["password"] == $encriptar){
 
 
 						$_SESSION["iniciarSesion"] = "ok";
@@ -33,6 +33,7 @@ class ControladorEmpleados{
 						$_SESSION["nombre"] = $respuesta["nombre"];
 						$_SESSION["usuario"] = $respuesta["usuario"];
 						$_SESSION["rol"] = $respuesta["rol"];
+						$_SESSION["projecto"] = $respuesta["projecto"];
 						$_SESSION["foto"] = $respuesta["foto"];
 
 						echo '<script>
@@ -75,7 +76,7 @@ class ControladorEmpleados{
 
 				if($respuesta["usuario"] == $_POST["nuevoUsuario"]){
 
-                        echo '<script> 
+                        echo '<sipt> 
 
 							swal({ 
 								  icon: "error",
@@ -124,7 +125,7 @@ class ControladorEmpleados{
 	if($_FILES["nuevaFoto"]["type"] == "image/jpeg"){
     $aleatorio = mt_rand(100, 999);
 
-    $ruta = "vistas/imagenes/usuarios/".$_POST["nuevoUsuario"]."/".$_POST["nuevoUsuario"].".jpg";
+    $ruta = "vistas/imagenes/usuarios/".$_POST["nuevoUsuario"]."/".$aleatorio.".jpg";
     /*======================================================
 	MODIFICAMOS UN ALTO Y ANCHO A LA IMAGEN
 	=====================================================*/
@@ -139,7 +140,7 @@ class ControladorEmpleados{
 if($_FILES["nuevaFoto"]["type"] == "image/png"){
     $aleatorio = mt_rand(100, 999);
 
-    $ruta = "vistas/imagenes/usuarios/".$_POST["nuevoUsuario"]."/".$_POST["nuevoUsuario"].".png";
+    $ruta = "vistas/imagenes/usuarios/".$_POST["nuevoUsuario"]."/".$aleatorio.".png";
     /*======================================================
 	MODIFICAMOS UN ALTO Y ANCHO A LA IMAGEN
 	=====================================================*/
@@ -158,7 +159,7 @@ if($_FILES["nuevaFoto"]["type"] == "image/png"){
 
 	
 }else{
-		$ruta = "";
+		$ruta ="vistas/imagenes/usuarios/user.png";
 	}
 
 	
@@ -171,6 +172,7 @@ if($_FILES["nuevaFoto"]["type"] == "image/png"){
 					           "usuario" => $_POST["nuevoUsuario"],
 					           "password" => $encriptar,
 					           "rol" =>$_POST["NuevoRol"],
+					           "projecto" =>$_POST["nuevoProjecto"],
 					           "foto"=>$ruta);
 
 
@@ -182,7 +184,7 @@ if($_FILES["nuevaFoto"]["type"] == "image/png"){
 
 								swal({
 									  title: "¡OK!",
-									  text: "¡Empleado creado correctamente!",
+									  text: "¡El Empleado ha sido creado correctamente!",
 									  type:"success",
 									  confirmButtonText: "Cerrar",
 									  closeOnConfirm: false
@@ -232,7 +234,6 @@ if($_FILES["nuevaFoto"]["type"] == "image/png"){
 
 		if(isset($_POST["editarUsuario"])){
 
-	
 
                 
 
@@ -271,7 +272,7 @@ if($_FILES["nuevaFoto"]["type"] == "image/png"){
 	if($_FILES["editarFoto"]["type"] == "image/jpeg"){
     $aleatorio = mt_rand(100, 999);
 
-    $ruta = "vistas/imagenes/usuarios/".$_POST["editarUsuario"]."/".$_POST["editarUsuario"].".jpg";
+    $ruta = "vistas/imagenes/usuarios/".$_POST["editarUsuario"]."/".$aleatorio.".jpg";
     /*======================================================
 	MODIFICAMOS UN ALTO Y ANCHO A LA IMAGEN
 	=====================================================*/
@@ -286,7 +287,7 @@ if($_FILES["nuevaFoto"]["type"] == "image/png"){
 if($_FILES["editarFoto"]["type"] == "image/png"){
     $aleatorio = mt_rand(100, 999);
 
-    $ruta = "vistas/imagenes/usuarios/".$_POST["editarUsuario"]."/".$_POST["editarUsuario"].".png";
+    $ruta = "vistas/imagenes/usuarios/".$_POST["editarFoto"]."/".$aleatorio.".png";
     /*======================================================
 	MODIFICAMOS UN ALTO Y ANCHO A LA IMAGEN
 	=====================================================*/
@@ -742,12 +743,11 @@ if($_FILES["editarFoto"]["type"] == "image/png"){
 
 	static public function ctrCrearhistorialInsumos(){
     if(isset($_POST["nombreUsuario"])){
-
-
-                
+             
 
 
 							$tabla = "historialobjetos";
+						
 
 				$datos = array("nombreUsuario" => $_POST["nombreUsuario"],
 							   "nombre" => $_POST["insumo"],
@@ -762,7 +762,7 @@ if($_FILES["editarFoto"]["type"] == "image/png"){
 		
 					
 			
-
+							
 
 
 		}
@@ -807,6 +807,38 @@ if($_FILES["editarFoto"]["type"] == "image/png"){
 
 							$tabla = "historialobjetos";
 
+							$item5 = "codigo";
+							$valor5 = $_POST["codigoh"];
+
+							$item4 = "id_ubicacion";
+							$valor4 = $_POST["id_ubicacionh"];
+							
+
+							$respuesta1 = ModeloEmpleados::mdlMostrarHistorialInsumos2($tabla, $item5, $valor5, $item4, $valor4);
+							
+							
+							
+                            if($respuesta1["codigo"] == $_POST["codigoh"] && $respuesta1["id_ubicacion"] == $_POST["id_ubicacionh"]){
+								
+								$cantidad = $respuesta1["cantidad"] + $_POST["trasfererenciah"];
+							
+								
+
+								$datos = array("nombreUsuario" => $_POST["nombreUsuario"],
+								"nombre" => $_POST["insumo"],
+								"cantidad" =>$cantidad,
+								"costo" => $_POST["costo"],
+								"id_ubicacion" => $_POST["id_ubicacionh"],
+								"ubicacion" => $_POST["ubicacion"],
+								"descripcion" => $_POST["descripcion"],
+								"codigo" => $_POST["codigo"]);
+
+                            $respuesta2 = ctrMostrarEmpleados::mdlActualizarHistorialInsumo($tabla1, $datos);
+
+							}else{
+
+							
+
 				$datos = array("nombreUsuario" => $_POST["nombreUsuarioh"],
 							   "nombre" => $_POST["insumoh"],
 							   "cantidad" => $_POST["trasfererenciah"],
@@ -816,9 +848,11 @@ if($_FILES["editarFoto"]["type"] == "image/png"){
 							   "descripcion" => $_POST["descripcionh"],
 							   "codigo" => $_POST["codigoh"]);
 
+							   
+
 				$respuesta = ModeloEmpleados::mdlCrearHistorialInsumos2($tabla, $datos);
+							}
 		
-					
 			if($respuesta == "ok"){
 	                       echo '<script> 
 
@@ -839,6 +873,28 @@ if($_FILES["editarFoto"]["type"] == "image/png"){
 
 							</script>';
 				    }
+
+					if($respuesta2 == "ok"){
+						echo '<script> 
+
+							 swal({
+								   title: "¡OK!",
+								   text: "¡trasfererencia de insumos correctamente!",
+								   type:"success",
+								   confirmButtonText: "Cerrar",
+								   closeOnConfirm: false
+								 },
+
+								 function(isConfirm){
+
+							 if(isConfirm){
+								 history.back();
+							 }
+							 });
+
+						 </script>';
+				 }
+			 
 				
 
 
@@ -1083,127 +1139,6 @@ if(isset($_POST["ubicacion"])){
 }
 	}
 
-	
-
-	/*=============================================
-	EDITAR Ubicacion(Proyecto)
-	=============================================*/
-
-	static public function ctrEditarUbicacion(){
-
-		if(isset($_POST["editarUbicacion"])){
-           
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarUbicacion"])){
-
-				/*=============================================
-				VALIDAR IMAGEN
-				=============================================*/
-
-				$tabla = "ubicacion";
-
-				$datos = array("ubicacion" => $_POST["editarUbicacion"],
-					"ruta" => $_POST["editarRuta"],
-							   "id" => $_POST["idUbicacion"]);
-
-				$respuesta = ModeloEmpleados::mdlEditarUbicacion($tabla, $datos);
-		
-						
-				if($respuesta == "ok"){
-	                       echo '<script> 
-
-								swal({
-									  title: "¡OK!",
-									  text: "¡El Proyecto(Ubicacion) ha sido actualizado correctamente!",
-									  type:"success",
-									  confirmButtonText: "Cerrar",
-									  closeOnConfirm: false
-									},
-
-									function(isConfirm){
-
-										if(isConfirm){
-											
-							           window.location = "proyectos";
-										}
-								});
-
-							</script>';
-				    }
-				
-
-
-			}else{
-
-					echo '<script> 
-
-								swal({
-									  title: "¡ERROR!",
-									  text: "¡el nombre no puede ir vacio ni llebar carácteres especiales!",
-									  type:"error",
-									  confirmButtonText: "Cerrar",
-									  closeOnConfirm: false
-									},
-
-									function(isConfirm){
-
-										if(isConfirm){
-											
-							           window.location = "usuarios";
-										}
-								});
-
-							</script>';
-			
-		}
-
-		}
-
-	}
-
-
-
-	/*=============================================
-	BORRAR UBICACION
-	=============================================*/
-
-	static public function ctrBorrarUbicacion(){
-
-		if(isset($_GET["idUbicacion"])){
-
-			$tabla ="ubicacion";
-			$datos = $_GET["idUbicacion"];
-
-			
-
-			$respuesta = ModeloEmpleados::mdlBorrarUbicacion($tabla, $datos);
-
-			if($respuesta == "ok"){
-
-				echo'<script>
-
-				swal({
-					  type: "success",
-					  title: "El proyecto ha sido borrada correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar",
-					  closeOnConfirm: false
-					 	},
-
-	                 function(isConfirm){
-
-							if(isConfirm){
-								
-				           window.location = "proyectos";
-							}
-					});
-
-				</script>';
-
-			}		
-
-		}
-
-	}
 
 }
 	

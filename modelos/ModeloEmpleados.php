@@ -3,35 +3,6 @@
 require_once "Conexion.php";
 
 class ModeloEmpleados{
-/*=============================================
-  REGISTRO DE Empleado
-  =============================================*/
-
-  static public function mdlIngresarEmpleado($tabla, $datos){
-
-    $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, rol, foto) VALUES (:nombre, :usuario, :password, :rol, :foto)");
-
-    $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
-    $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
-    $stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
-    $stmt->bindParam(":rol", $datos["rol"], PDO::PARAM_STR);
-    $stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
-
-    if($stmt->execute()){
-
-      return "ok";  
-
-    }else{
-
-      return "error";
-    
-    }
-
-    $stmt->close();
-    
-    $stmt = null;
-
-  }
 
   /*=============================================
   MOSTRAR Empleado
@@ -92,65 +63,9 @@ class ModeloEmpleados{
 
   }
 
+  
   /*=============================================
-  MOSTRAR INSUMOS
-  =============================================*/
-
-
-  static public function mdlMostrarInsumosAjax($tabla, $item, $valor){
-
-    if($item != null){
-
-      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
-
-      $stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
-
-      $stmt -> execute();
-
-      return $stmt -> fetch();
-
-    }else{
-
-      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
-
-      $stmt -> execute();
-
-      return $stmt -> fetchAll();
-
-    }
-
-  }
-
-    //mostrar empresa
-
-    static public function mdlMostrarInsumos($tabla, $item1){
-
-      if($item1 != null){
-    
-       $stmt = Conexion::conectar()->prepare("SELECT * FROM  $tabla WHERE id_ubicacion = :id_ubicacion ORDER BY id DESC");
-      $stmt -> bindParam(":id_ubicacion", $item1, PDO::PARAM_INT);
-    
-      $stmt->execute();
-    
-    return $stmt->fetchAll();
-    
-    }else{
-    
-     $stmt = Conexion::conectar()->prepare("SELECT * FROM  $tabla");
-      $stmt -> execute();
-    
-        return $stmt -> fetchAll();
-    
-    
-        $stmt = null;
-    }
-    
-     
-    }
-    
-    
-  /*=============================================
-  ACTUALIZAR Empleado
+  ACTUALIZAR Insumo
   =============================================*/
 
   static public function mdlActualizarEmpleado($tabla, $item1, $valor1, $item2, $valor2){
@@ -176,6 +91,29 @@ class ModeloEmpleados{
 
   }
 
+  
+  
+  /*=============================================
+  ACTUALIZAR HISTORIAL Insumo
+  =============================================*/
+
+  static public function mdlActualizarHistorialInsumo($tabla, $datos){
+
+    $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombreUsuario = :nombreUsuario, nombre = :nombre, cantidad = :cantidad,  costo = :costo, descripcion = :descripcion  WHERE codigo = :codigo");
+
+    $stmt -> bindParam(":nombreUsuario", $datos["nombreUsuario"], PDO::PARAM_STR);
+    $stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+    $stmt -> bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+    $stmt -> bindParam(":costo", $datos["costo"], PDO::PARAM_STR);
+    $stmt -> bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+    $stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+    $stmt -> bindParam(":id_ubicacion", $datos["id_ubicacion"], PDO::PARAM_INT);
+
+    $stmt -> close();
+
+    $stmt = null;
+
+  }
   /*=============================================
   EDITAR Empleado
   =============================================*/
@@ -206,36 +144,6 @@ class ModeloEmpleados{
 
   }
 
-
-  /*=============================================
-  EDITAR Ubicacion
-  =============================================*/
-
-  static public function mdlEditarUbicacion($tabla, $datos){
-  
-    $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET ubicacion = :ubicacion, ruta = :ruta WHERE id=
-     :id");
-
-    $stmt -> bindParam(":ubicacion", $datos["ubicacion"], PDO::PARAM_STR);
-    $stmt -> bindParam(":ruta", $datos["ruta"], PDO::PARAM_STR);
-    $stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
-   
-
-    if($stmt -> execute()){
-
-      return "ok";
-    
-    }else{
-
-      return "error"; 
-
-    }
-
-    $stmt -> close();
-
-    $stmt = null;
-
-  }
 
   /*=============================================
   BORRAR Empleado
@@ -296,35 +204,123 @@ class ModeloEmpleados{
 
   //mostrar empresa
 
-  static public function mdlMostrarEmpresas($tabla, $item, $valor){
+  static public function mdlMostrarInsumos($tabla, $item1){
 
-    if($item != null){
+  if($item1 != null){
 
-    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+   $stmt = Conexion::conectar()->prepare("SELECT * FROM  $tabla WHERE id_ubicacion = :id_ubicacion ORDER BY id DESC");
+  $stmt -> bindParam(":id_ubicacion", $item1, PDO::PARAM_INT);
 
-    $stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+  $stmt->execute();
 
-    $stmt -> execute();
+return $stmt->fetchAll();
 
-    return $stmt -> fetch();
+}else{
 
-
-    $stmt = null;
-
-  }else{
-
-    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
-
-
-    $stmt -> execute();
+ $stmt = Conexion::conectar()->prepare("SELECT * FROM  $tabla");
+  $stmt -> execute();
 
     return $stmt -> fetchAll();
 
 
     $stmt = null;
+}
 
+ 
+}
+
+
+/*=============================================
+ ACTUALIZAR INSUMOS
+  =============================================*/
+
+  static public function mdlActualizarInsumos($tabla, $datos){
+  
+    $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombreUsuario = :nombreUsuario, nombre = :nombre, cantidad = :cantidad,  costo = :costo, descripcion = :descripcion, codigo = :codigo WHERE id = :id");
+
+    $stmt -> bindParam(":nombreUsuario", $datos["nombreUsuario"], PDO::PARAM_STR);
+    $stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+    $stmt -> bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+    $stmt -> bindParam(":costo", $datos["costo"], PDO::PARAM_STR);
+    $stmt -> bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+    $stmt -> bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+    $stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+    if($stmt -> execute()){
+
+      return "ok";
+    
+    }else{
+
+      return "error"; 
+
+    }
+
+    $stmt -> close();
+
+    $stmt = null;
 
   }
+
+
+
+  /*=============================================
+  MOSTRAR INSUMOS
+  =============================================*/
+
+
+  static public function mdlMostrarInsumosAjax($tabla, $item, $valor){
+
+    if($item != null){
+
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+      $stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      return $stmt -> fetch();
+
+    }else{
+
+      $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+      $stmt -> execute();
+
+      return $stmt -> fetchAll();
+
+    }
+
+  }
+
+  /*=============================================
+  REGISTRO DE Empleado
+  =============================================*/
+
+  static public function mdlIngresarEmpleado($tabla, $datos){
+
+    $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, rol, projecto, foto) VALUES (:nombre, :usuario, :password, :rol, :projecto, :foto)");
+
+    $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+    $stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+    $stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
+    $stmt->bindParam(":rol", $datos["rol"], PDO::PARAM_STR);
+    $stmt->bindParam("projecto", $datos["projecto"], PDO::PARAM_STR);
+    $stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
+
+    if($stmt->execute()){
+
+      return "ok";  
+
+    }else{
+
+      return "error";
+    
+    }
+
+    $stmt->close();
+    
+    $stmt = null;
 
   }
 
@@ -365,22 +361,6 @@ class ModeloEmpleados{
 
   
 
-  /*=============================================
-  BUSCADOR 
-  =============================================*/
-  static public function mdlUsuariosBusqueda($tabla, $busqueda){
-
-    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE cedulaPasaporte like '%$busqueda%'");
-
-
-    $stmt -> execute();
-
-    return $stmt -> fetchAll();
-
-
-    $stmt = null;
-
-  }
 
 
   /*=============================================
@@ -553,15 +533,50 @@ class ModeloEmpleados{
 
 
 
-  //mostrar empresa
+  //mostrar insumo
 
-  static public function mdlMostrarHistorialInsumos($tabla, $item, $valor){
+  static public function mdlMostrarHistorialInsumos($tabla, $item3, $valor3){
 
-    if($item != null){
+    if($item3 != null){
 
-    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item3 = :$item3");
 
-    $stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+    $stmt -> bindParam(":".$item3, $valor3, PDO::PARAM_STR);
+
+    $stmt -> execute();
+
+    return $stmt -> fetch();
+
+
+    $stmt = null;
+
+  }else{
+
+    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+
+    $stmt -> execute();
+
+    return $stmt -> fetchAll();
+
+
+    $stmt = null;
+
+
+  }
+
+  }
+
+  
+  //mostrar historial insumo
+
+  static public function mdlMostrarHistorialInsumos2($tabla, $item5, $valor5, $item4, $valor4){
+
+    if($item4 != null){
+
+    $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item5 = :$item5");
+
+    $stmt -> bindParam(":".$item5, $valor5, PDO::PARAM_STR);
 
     $stmt -> execute();
 
@@ -676,35 +691,5 @@ class ModeloEmpleados{
     $stmt = null;
 
   }
-
-
-  /*=============================================
-  BORRAR UBICACION
-  =============================================*/
-
-  static public function mdlBorrarUbicacion($tabla, $datos){
-
-    $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
-
-    $stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
-
-    if($stmt -> execute()){
-
-      return "ok";
-    
-    }else{
-
-      return "error"; 
-
-    }
-
-    $stmt -> close();
-
-    $stmt = null;
-
-
-  }
-
-
 
 }
